@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .calculator {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 24px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: right;
+            box-sizing: border-box;
+            background-color: #e0f7fa;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #e0e0e0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #b0b0b0;
+        }
+
+        button.operator {
+            background-color: #25ddf9;
+            color: #fff;
+        }
+
+        button.operator:hover {
+            background-color: #17f1f5;
+        }
+
+        button.equals {
+            background-color: #4390a0;
+            color: #fff;
+        }
+
+        button.equals:hover {
+            background-color: #2e677d;
+        }
+
+        button.clear {
+            background-color: #35cbe5;
+            color: #fff;
+        }
+
+        button.clear:hover {
+            background-color: #2884c6;
+        }
+
+        button.backspace {
+            background-color: #00eeff;
+            color: #fff;
+        }
+
+        button.backspace:hover {
+            background-color: #00eaff;
+        }
+
+        button.span-two {
+            grid-column: span 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="screen" disabled>
+        <div class="buttons">
+            <button class="clear" onclick="clearScreen()">C</button>
+            <button class="operator" onclick="appendToScreen('/')">/</button>
+            <button class="backspace" onclick="backspace()">&#9003;</button>
+            <button class="operator" onclick="appendToScreen('-')">-</button>
+            <button onclick="appendToScreen('7')">7</button>
+            <button onclick="appendToScreen('8')">8</button>
+            <button onclick="appendToScreen('9')">9</button>
+            <button class="operator" onclick="appendToScreen('+')">+</button>
+            <button onclick="appendToScreen('4')">4</button>
+            <button onclick="appendToScreen('5')">5</button>
+            <button onclick="appendToScreen('6')">6</button>
+            <button class="equals" onclick="calculate()" style="grid-row: span 2;">=</button>
+            <button onclick="appendToScreen('1')">1</button>
+            <button onclick="appendToScreen('2')">2</button>
+            <button onclick="appendToScreen('3')">3</button>
+            <button onclick="appendToScreen('0')" class="span-two">0</button>
+            <button onclick="appendToScreen('.')">.</button>
+        </div>
+    </div>
+
+    <script>
+        function appendToScreen(value) {
+            document.getElementById("screen").value += value;
+        }
+
+        function clearScreen() {
+            document.getElementById("screen").value = "";
+        }
+
+        function backspace() {
+            let screenValue = document.getElementById("screen").value;
+            document.getElementById("screen").value = screenValue.slice(0, -1);
+        }
+
+        function calculate() {
+            try {
+                let expression = document.getElementById("screen").value;
+                let result = new Function('return ' + expression)();
+                document.getElementById("screen").value = result;
+            } catch (error) {
+                document.getElementById("screen").value = "Error";
+            }
+        }
+    </script>
+</body>
+</html>
